@@ -11,9 +11,9 @@ return new class extends Migration
         Schema::create('profiles', static function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->unsignedSmallInteger('age')->nullable();
-            $table->unsignedSmallInteger('height_inches')->nullable();
-            $table->unsignedSmallInteger('weight_pounds')->nullable();
+            $table->date('dob');
+            $table->unsignedSmallInteger('height')->nullable();
+            $table->unsignedSmallInteger('weight')->nullable();
             $table->float('bmi')->nullable();
             $table->char('gender', 1)->nullable();
             $table->longText('history')->nullable();

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -19,8 +20,7 @@ class Medicine extends Model implements HasMedia
     protected function casts(): array
     {
         return [
-            'stock' => 'integer',
-            'expiry_date' => 'date',
+            'quantity' => 'integer',
             'category' => Category::class,
         ];
     }
@@ -28,6 +28,11 @@ class Medicine extends Model implements HasMedia
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function schedules(): HasMany
+    {
+        return $this->hasMany(Schedule::class);
     }
 
     public function registerMediaCollections(): void

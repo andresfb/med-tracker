@@ -8,14 +8,16 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('medicines', static function (Blueprint $table) {
+        Schema::create('schedules', static function (Blueprint $table) {
             $table->id();
+            $table->foreignId('medicine_id')->constrained();
             $table->foreignId('user_id')->constrained();
-            $table->string('name');
-            $table->char('category', 1);
-            $table->unsignedSmallInteger('quantity');
-            $table->string('dosage');
-            $table->text('instructions')->nullable();
+            $table->char('frequency', 2);
+            $table->string('time_of_day');
+            $table->date('start_date');
+            $table->date('end_date')
+                ->nullable()
+                ->default('2100-01-01');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -23,6 +25,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('medicines');
+        Schema::dropIfExists('schedules');
     }
 };

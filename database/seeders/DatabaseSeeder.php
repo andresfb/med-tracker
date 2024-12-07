@@ -13,11 +13,38 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $user = User::where('email', config('app.admin_email'))->first();
+        if (!$user) {
+            echo "User not created. Run php artisan setup:user\n";
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+            return;
+        }
+
+        $profileFile = __DIR__."/ProfileSeeder.php";
+        if (file_exists($profileFile)) {
+            echo "Creating profile...\n";
+            $this->call(ProfileSeeder::class);
+            echo "Done!\n\n";
+        } else {
+            echo "No profile seeder\n\n";
+        }
+
+        $medicinesFile = __DIR__."/MedicineSeeder.php";
+        if (file_exists($medicinesFile)) {
+            echo "Creating medicines...\n";
+            $this->call(MedicineSeeder::class);
+            echo "Done!\n\n";
+        } else {
+            echo "No medicines seeder\n\n";
+        }
+
+        $scheduleFile = __DIR__."/ScheduleSeeder.php";
+        if (file_exists($scheduleFile)) {
+            echo "Creating Schedule...\n";
+            $this->call(ScheduleSeeder::class);
+            echo "Done!\n\n";
+        } else {
+            echo "No schedule seeder\n\n";
+        }
     }
 }
